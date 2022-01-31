@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services';
 import { Product } from 'src/app/models';
 import { Observable } from 'rxjs';
+import * as FS from '@fullstory/browser';
 
 @Component({
   selector: 'app-cart',
@@ -21,6 +22,12 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.initDataSource();
     this.initCalculator();
+    if (this.totalCost > 0){
+        FS.setUserVars({
+          totalCost : this.totalCost
+        });
+        FS.log("Total cart cost: " +this.totalCost)
+      }
   }
 
   /**

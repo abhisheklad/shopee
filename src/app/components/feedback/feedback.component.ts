@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import * as FS from '@fullstory/browser';
 
 export interface FeedbackData {
   nps: number; // net promoter score
@@ -26,6 +27,8 @@ export class FeedbackComponent {
       // broadcasts a CustomEvent
       // see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
       window.dispatchEvent(new CustomEvent('feedback_submitted', { detail: { nps, osat, comments } }));
+      FS.event('feedback_submitted', {nps_score: nps, osat_score: osat, user_comments: comments });
+      FS.log ("Feedback submitted!")
     });
   }
 }
